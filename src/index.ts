@@ -1,7 +1,13 @@
 import { reservedWords } from "./reserved-words";
-import { ZetaIconError, ErrorType } from "./error";
+import { ZetaIconError, ErrorType, ErrorSeverity } from "./error";
 
-export { checkIconName, checkCategoryName };
+export {
+  checkIconName,
+  checkCategoryName,
+  ZetaIconError,
+  ErrorType,
+  ErrorSeverity,
+};
 
 /// Check the name if a single icon
 function checkIconName(
@@ -45,7 +51,7 @@ function checkIconName(
 
 /// Check the name of a category
 function checkCategoryName(categoryName: string): ZetaIconError {
-  if (/^[^\\/:*?"<>|]+$/.test(categoryName)) {
+  if (!/^[^\\/:*?"<>|]+$/.test(categoryName)) {
     return new ZetaIconError(ErrorType.invalidChar, categoryName);
   }
 

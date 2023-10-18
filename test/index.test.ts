@@ -1,4 +1,4 @@
-import { checkIconName } from "../src/index";
+import { checkCategoryName, checkIconName } from "../src/index";
 import { ErrorType } from "../src/error";
 
 describe("testing checkIconName", () => {
@@ -28,5 +28,17 @@ describe("testing checkIconName", () => {
 
   test(`"$test" should be a valid icon name`, () => {
     expect(checkIconName("$test").type).toBe(ErrorType.none);
+  });
+});
+
+describe("testing checkCategoryName", () => {
+  test("Category Name should be a valid category name", () => {
+    expect(checkCategoryName("Category Name").type).toBe(ErrorType.none);
+  });
+
+  test("/Category/Name should be an invalid category name", () => {
+    expect(checkCategoryName("/Category/Name").type).toBe(
+      ErrorType.invalidChar
+    );
   });
 });
