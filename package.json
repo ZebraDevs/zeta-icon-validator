@@ -1,7 +1,7 @@
 {
   "name": "zeta-icon-name-checker",
   "version": "0.0.1",
-  "description": "A utility used to check the validity of icon names in the Zeta Icon Library.",
+  "description": "A utility used to check the validity of icon and category names in the Zeta Icon Library.",
   "main": "lib/index.js",
   "scripts": {
     "test": "jest",

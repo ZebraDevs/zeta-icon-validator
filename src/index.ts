@@ -1,17 +1,14 @@
 import { reservedWords } from "./reserved-words";
 import { ZetaIconError, ErrorType } from "./error";
 
-export { checkIconNames, checkIconName };
+export { checkIconName, checkCategoryName };
 
-function checkIconNames(
+/// Check the name if a single icon
+function checkIconName(
   iconName: string,
-  usedNames?: string[],
-  categoryName?: string
-): ZetaIconError[] {
-  return [];
-}
-
-function checkIconName(iconName: string): ZetaIconError {
+  categoryName?: string,
+  usedNames?: string[]
+): ZetaIconError {
   // Starts with a number
   if (/^\d/.test(iconName)) {
     return new ZetaIconError(ErrorType.invalidChar, iconName);
@@ -27,5 +24,35 @@ function checkIconName(iconName: string): ZetaIconError {
     return new ZetaIconError(ErrorType.reservedWord, iconName);
   }
 
+  // Icon name has been used
+  if (
+    categoryName != undefined &&
+    usedNames != undefined &&
+    usedNames.includes(iconName)
+  ) {
+    const newName = renameIcon(iconName, categoryName);
+    const newNameError = checkIconName(newName);
+
+    if (newNameError.type == ErrorType.none) {
+      return new ZetaIconError(ErrorType.iconRenamed, iconName, newName);
+    } else {
+      return newNameError;
+    }
+  }
+
   return new ZetaIconError(ErrorType.none, iconName);
+}
+
+/// Check the name of a category
+function checkCategoryName(categoryName: string): ZetaIconError {
+  if (/^[^\\/:*?"<>|]+$/.test(categoryName)) {
+    return new ZetaIconError(ErrorType.invalidChar, categoryName);
+  }
+
+  return new ZetaIconError(ErrorType.none, categoryName);
+}
+
+/// Get the new name for an icon if it has been used
+function renameIcon(iconName: string, categoryName: string): string {
+  return `${iconName} ${categoryName}`;
 }

@@ -1,2 +1,4 @@
-export { checkIconName };
-declare function checkIconName(iconName: string, usedNames?: string[], categoryName?: string): ZetaIconNameError[];
+import { ZetaIconError } from "./error";
+export { checkIconName, checkCategoryName };
+declare function checkIconName(iconName: string, categoryName?: string, usedNames?: string[]): ZetaIconError;
+declare function checkCategoryName(categoryName: string): ZetaIconError;
