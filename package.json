@@ -1,17 +1,21 @@
 {
   "name": "zeta-icon-name-checker",
-  "version": "0.0.31",
+  "version": "0.0.35",
   "description": "A utility used to check the validity of icon and category names in the Zeta Icon Library.",
   "main": "lib/index.js",
   "scripts": {
     "test": "jest",
-    "build": "npx tsc -p tsconfig.json"
+    "build": "npx tsc -p tsconfig.json",
+    "publish": "npm run build | npm publish"
   },
   "keywords": [
     "zeta",
     "icon",
     "name",
     "checker"
+  ],
+  "files": [
+    "lib/index.js"
   ],
   "author": "mikecoomber",
   "license": "MIT",
