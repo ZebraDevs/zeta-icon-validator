@@ -19,7 +19,11 @@ export function checkIconName(
   }
 
   // Contains a reserved word
-  if (reservedWords.find((reservedWord) => reservedWord === iconName)) {
+  if (
+    reservedWords.find(
+      (reservedWord) => reservedWord === iconName.toLowerCase()
+    )
+  ) {
     return new ZetaIconError(ErrorType.reservedWord, iconName);
   }
 
