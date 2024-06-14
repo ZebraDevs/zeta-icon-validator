@@ -1,16 +1,9 @@
+import { renameIcon } from "./renameIcon.js";
 import { reservedWords } from "./reserved-words.js";
-import { ZetaIconError, ErrorType, ErrorSeverity } from "./error.js";
-
-export {
-  checkIconName,
-  checkCategoryName,
-  ZetaIconError,
-  ErrorType,
-  ErrorSeverity,
-};
+import { ErrorType, ZetaIconError } from "./types.js";
 
 /// Check the name if a single icon
-function checkIconName(
+export function checkIconName(
   iconName: string,
   categoryName?: string,
   usedNames?: string[]
@@ -47,18 +40,4 @@ function checkIconName(
   }
 
   return new ZetaIconError(ErrorType.none, iconName);
-}
-
-/// Check the name of a category
-function checkCategoryName(categoryName: string): ZetaIconError {
-  if (!/^[^\\/:*?"<>|]+$/.test(categoryName)) {
-    return new ZetaIconError(ErrorType.invalidChar, categoryName);
-  }
-
-  return new ZetaIconError(ErrorType.none, categoryName);
-}
-
-/// Get the new name for an icon if it has been used
-function renameIcon(iconName: string, categoryName: string): string {
-  return `${iconName} ${categoryName}`;
 }

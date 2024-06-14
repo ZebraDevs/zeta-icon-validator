@@ -5,10 +5,10 @@
     "strict": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "outDir": "./lib",
+    "outDir": "./dist",
     "allowArbitraryExtensions": true,
     "declaration": true,
     "moduleResolution": "node16"   
   },
-  "include": ["./src/"], 
+  "include": ["./src/", "index.ts"], 
 }
