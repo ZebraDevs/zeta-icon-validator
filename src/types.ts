@@ -28,15 +28,15 @@ export class ZetaIconError {
         this.severity = ErrorSeverity.medium;
         break;
       case ErrorType.invalidChar:
-        this.message = `${iconName} contains an invalid character and will not be exported to the library`;
+        this.message = `${iconName} contains an invalid character and will not be available in Zeta`;
         this.severity = ErrorSeverity.high;
         break;
       case ErrorType.startsWithNumber:
-        this.message = `${iconName} starts with a number and will not be exported to the library`;
+        this.message = `${iconName} starts with a number and will not be available in Zeta`;
         this.severity = ErrorSeverity.high;
         break;
       case ErrorType.reservedWord:
-        this.message = `${iconName} is a reserved word in Dart or Javascript so will not be available for use in flutter`;
+        this.message = `${iconName} is a reserved word in Dart or Javascript and will not be available in Zeta`;
         this.severity = ErrorSeverity.high;
         break;
       case ErrorType.none:
