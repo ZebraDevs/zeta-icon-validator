@@ -36,7 +36,7 @@ export class ZetaIconError {
         this.severity = ErrorSeverity.high;
         break;
       case ErrorType.reservedWord:
-        this.message = `${iconName} is a reserved word in Dart or Javascript and will not be available in Zeta`;
+        this.message = `${iconName} is a reserved word in Dart so the icon will not be available in Zeta. Please rename this icon.`;
         this.severity = ErrorSeverity.high;
         break;
       case ErrorType.none:
