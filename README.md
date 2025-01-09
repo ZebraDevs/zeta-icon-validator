@@ -1,4 +1,4 @@
-# zeta-icon-name-checker
+# zeta-icon-validator
 
 A utility used to check the validity of icons before they are uploaded to the Zeta Icon Library.
 
