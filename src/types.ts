@@ -1,4 +1,4 @@
-export enum ErrorType {
+export enum RenameErrorType {
   none,
   iconRenamed,
   invalidChar,
@@ -13,36 +13,47 @@ export enum ErrorSeverity {
 }
 
 export class ZetaIconError {
-  type: ErrorType;
   message: string;
   severity: ErrorSeverity;
+
+  constructor(message: string, severity: ErrorSeverity) {
+    this.message = message;
+    this.severity = severity;
+  }
+}
+
+export class ZetaIconNameError extends ZetaIconError {
+  type: RenameErrorType;
   newName?: string;
 
-  constructor(type: ErrorType, iconName: string, newName?: string) {
-    this.type = type;
-    this.newName = newName;
+  constructor(type: RenameErrorType, iconName: string, newName?: string) {
+    let message;
+    let severity;
 
     switch (type) {
-      case ErrorType.iconRenamed:
-        this.message = `${iconName} will be renamed to ${newName}`;
-        this.severity = ErrorSeverity.medium;
+      case RenameErrorType.iconRenamed:
+        message = `${iconName} will be renamed to ${newName}`;
+        severity = ErrorSeverity.medium;
         break;
-      case ErrorType.invalidChar:
-        this.message = `${iconName} contains an invalid character and will not be available in Zeta`;
-        this.severity = ErrorSeverity.high;
+      case RenameErrorType.invalidChar:
+        message = `${iconName} contains an invalid character and will not be available in Zeta`;
+        severity = ErrorSeverity.high;
         break;
-      case ErrorType.startsWithNumber:
-        this.message = `${iconName} starts with a number and will not be available in Zeta`;
-        this.severity = ErrorSeverity.high;
+      case RenameErrorType.startsWithNumber:
+        message = `${iconName} starts with a number and will not be available in Zeta`;
+        severity = ErrorSeverity.high;
         break;
-      case ErrorType.reservedWord:
-        this.message = `${iconName} is a reserved word in Dart so the icon will not be available in Zeta. Please rename this icon.`;
-        this.severity = ErrorSeverity.high;
+      case RenameErrorType.reservedWord:
+        message = `${iconName} is a reserved word in Dart so the icon will not be available in Zeta. Please rename this icon.`;
+        severity = ErrorSeverity.high;
         break;
-      case ErrorType.none:
-        this.message = `${iconName} is a valid name`;
-        this.severity = ErrorSeverity.none;
+      case RenameErrorType.none:
+        message = `${iconName} is a valid name`;
+        severity = ErrorSeverity.none;
         break;
     }
+
+    super(message, severity);
+    this.type = type;
   }
 }

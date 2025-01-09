@@ -1,11 +1,15 @@
-import { checkCategoryName } from "./src/checkCategoryName.js";
-import { checkIconName } from "./src/checkIconName.js";
-import { ZetaIconError, ErrorType, ErrorSeverity } from "./src/types.js";
+import { validateCategoryName } from "./src/validateCategoryName.js";
+import { validateIconName } from "./src/validateIconName.js";
+import {
+  ZetaIconNameError,
+  RenameErrorType,
+  ErrorSeverity,
+} from "./src/types.js";
 
 export {
-  checkIconName,
-  checkCategoryName,
-  ZetaIconError,
-  ErrorType,
+  validateIconName,
+  validateCategoryName,
+  ZetaIconNameError,
+  RenameErrorType,
   ErrorSeverity,
 };

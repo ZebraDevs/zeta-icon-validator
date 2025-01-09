@@ -1,21 +1,21 @@
 import { renameIcon } from "./renameIcon.js";
 import { reservedWords } from "./reserved-words.js";
-import { ErrorType, ZetaIconError } from "./types.js";
+import { RenameErrorType, ZetaIconNameError } from "./types.js";
 
 /// Check the name if a single icon
-export function checkIconName(
+export function validateIconName(
   iconName: string,
   categoryName?: string,
   usedNames?: string[]
-): ZetaIconError {
+): ZetaIconNameError {
   // Starts with a number
   if (/^\d/.test(iconName)) {
-    return new ZetaIconError(ErrorType.startsWithNumber, iconName);
+    return new ZetaIconNameError(RenameErrorType.startsWithNumber, iconName);
   }
 
   // Contains a non alpha-numeric character except for spaces, _, and $
   if (/^(?=.*[^a-zA-Z0-9$ _]).*$/.test(iconName)) {
-    return new ZetaIconError(ErrorType.invalidChar, iconName);
+    return new ZetaIconNameError(RenameErrorType.invalidChar, iconName);
   }
 
   // Contains a reserved word
@@ -24,7 +24,7 @@ export function checkIconName(
       (reservedWord) => reservedWord === iconName.toLowerCase()
     )
   ) {
-    return new ZetaIconError(ErrorType.reservedWord, iconName);
+    return new ZetaIconNameError(RenameErrorType.reservedWord, iconName);
   }
 
   // Icon name has been used
@@ -34,14 +34,18 @@ export function checkIconName(
     usedNames.includes(iconName)
   ) {
     const newName = renameIcon(iconName, categoryName);
-    const newNameError = checkIconName(newName);
+    const newNameError = validateIconName(newName);
 
-    if (newNameError.type == ErrorType.none) {
-      return new ZetaIconError(ErrorType.iconRenamed, iconName, newName);
+    if (newNameError.type == RenameErrorType.none) {
+      return new ZetaIconNameError(
+        RenameErrorType.iconRenamed,
+        iconName,
+        newName
+      );
     } else {
       return newNameError;
     }
   }
 
-  return new ZetaIconError(ErrorType.none, iconName);
+  return new ZetaIconNameError(RenameErrorType.none, iconName);
 }

@@ -1,44 +1,46 @@
 # zeta-icon-name-checker
 
-An NPM package used to check the validity of icon and category names for the Zeta Icon Library.
+A utility used to check the validity of icons before they are uploaded to the Zeta Icon Library.
+
+# Criteria
+
+## Name
+
+Icon names are considered invalid if they
+
+- Start with a number
+- Contain a non alpha-numeric character except for spaces, \_, and $
+- Are a [Dart reserved word](https://dart.dev/language/keywords)
+
+Icons will be renamed if the name has been used already.
+
+They are renamed by prepending its category name to it.
+
+## Properties
+
+Icons must have a `Style` variant property with `Round` and `Sharp` variants.
+
+## Size
+
+The bound box of all icon variants must be 24x24px.
 
 # Usage
 
-## Check Icon Name
+## Validate Icon
 
-Used to check the validity of a single icon name. Pass in categoryName and usedNames to check for duplicate name errors.
+This function is the main entry point for checking icon validity.
 
-```ts
-checkIconName(
-  iconName: string,
-  categoryName?: string,
-  usedNames?: string[]
-): ZetaIconError
-```
+It accepts a Figma component set object and validates its name, size, and properties.
 
-## Check Category Name
+It returns a list of `ZetaIconError` which contains all the erros with the given icon.
 
-Used to check the validity of a single category name.
-Only returns an error type of `ErrorType.invalidChar` or `ErrorType.none`.
+Each error has a severity and a message.
+
+If an icon has been renamed, the error will have a `newName` property containing the icons new name.
 
 ```ts
-checkCategoryName(categoryName: string): ZetaIconError
+validateIcon(icon: ComponentSetNode): ZetaIconError[]
 ```
-
-## Reading Errors
-
-Errors are all of type `ZetaIconError`. Possible error types are:
-
-```ts
-enum ErrorType {
-  none,
-  iconRenamed,
-  invalidChar,
-  reservedWord,
-}
-```
-
-Errors all have severity levels and pre-generated messages based on their type.
 
 <details>
     <summary>Zebra Repository Information</summary>
