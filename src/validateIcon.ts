@@ -4,11 +4,23 @@ import { validateProperties } from "./validateProperties.js";
 import { validateIconSize } from "./validateIconSize.js";
 import { ComponentSetNode } from "./figma-types.js";
 
-export function validateIcon(icon: ComponentSetNode): ZetaIconError[] {
+/**
+ * Validates an icon
+ *
+ * @param icon The icon to validate
+ * @param categoryName The name of the category the icon belongs to
+ * @param usedIconNames The names of icons that have already been used
+ * @returns A list of errors
+ */
+export function validateIcon(
+  icon: ComponentSetNode,
+  categoryName?: string,
+  usedIconNames?: string[]
+): ZetaIconError[] {
   const errors: ZetaIconError[] = [];
 
   const iconName = icon.name;
-  const nameError = validateIconName(iconName);
+  const nameError = validateIconName(iconName, categoryName, usedIconNames);
 
   if (nameError.severity != ErrorSeverity.none) {
     errors.push(nameError);
