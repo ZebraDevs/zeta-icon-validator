@@ -1,12 +1,27 @@
-import { ComponentPropertyDefinitions } from "./figma-types.js";
+import {
+  ComponentPropertyDefinitions,
+  ComponentSetNode,
+} from "./figma-types.js";
 import { ErrorSeverity, ZetaIconError } from "./types.js";
 
-export function validateProperties(
-  properties: ComponentPropertyDefinitions
-): ZetaIconError[] {
+export function validateProperties(icon: ComponentSetNode): ZetaIconError[] {
   const errors: ZetaIconError[] = [];
 
-  const styleProperty = properties["Style"];
+  let properties: ComponentPropertyDefinitions;
+  try {
+    properties = icon.componentPropertyDefinitions;
+  } catch (e) {
+    errors.push(
+      new ZetaIconError(
+        `${icon.name} has invalid properties`,
+        ErrorSeverity.high
+      )
+    );
+
+    return errors;
+  }
+
+  const styleProperty = properties!["Style"];
 
   if (styleProperty == undefined) {
     errors.push(

@@ -1,18 +1,18 @@
 export interface ComponentSetNode {
   name: string;
   componentPropertyDefinitions: ComponentPropertyDefinitions;
-  children: ComponentNode[];
+  children: readonly ComponentNode[];
 }
 
 export interface ComponentNode {
   name: string;
-  absoluteBoundingBox: Rect;
+  absoluteBoundingBox?: Rect | null;
 }
 
 export interface ComponentPropertyDefinitions {
   [propertyName: string]: {
     type: "BOOLEAN" | "TEXT" | "INSTANCE_SWAP" | "VARIANT";
-    defaultValue: string | boolean;
+    defaultValue?: string | boolean;
     variantOptions?: string[];
   };
 }

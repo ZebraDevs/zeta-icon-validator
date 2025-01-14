@@ -26,9 +26,7 @@ export function validateIcon(
     errors.push(nameError);
   }
 
-  const properties = icon.componentPropertyDefinitions;
-
-  errors.push(...validateProperties(properties));
+  errors.push(...validateProperties(icon));
 
   for (const child of icon.children) {
     if (!child.absoluteBoundingBox) {
