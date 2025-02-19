@@ -12,13 +12,23 @@ export enum ErrorSeverity {
   high,
 }
 
+export type ZetaIconErrorType =
+  | "LayerError"
+  | "SizeError"
+  | "NameError"
+  | "BoundingBoxError"
+  | "IconPartsError"
+  | "ColorError";
+
 export class ZetaIconError {
   message: string;
   severity: ErrorSeverity;
+  errorType: ZetaIconErrorType | undefined;
 
-  constructor(message: string, severity: ErrorSeverity) {
+  constructor(message: string, severity: ErrorSeverity, type?: ZetaIconErrorType) {
     this.message = message;
     this.severity = severity;
+    this.errorType = type;
   }
 }
 
@@ -32,7 +42,7 @@ export class ZetaIconNameError extends ZetaIconError {
 
     switch (type) {
       case RenameErrorType.iconRenamed:
-        message = `${iconName} will be renamed to ${newName}`;
+        message = `Multiple icons named ${iconName} found. This will be renamed to ${newName}`;
         severity = ErrorSeverity.medium;
         break;
       case RenameErrorType.invalidChar:
@@ -53,7 +63,7 @@ export class ZetaIconNameError extends ZetaIconError {
         break;
     }
 
-    super(message, severity);
+    super(message, severity, "NameError");
     this.type = type;
   }
 }
