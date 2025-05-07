@@ -1,13 +1,12 @@
 {
   "name": "@zebra-fed/zeta-icon-validator",
-  "version": "0.1.4",
+  "version": "0.2.0",
   "description": "A utility used to check the validity of icons before they are uploaded to the Zeta Icon Library",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "type": "module",
-  "private": false,
   "scripts": {
-    "build": "npx tsc -p tsconfig.json",
+    "build": "tsc -p tsconfig.json",
     "test": "npm run build && jest",
     "publish-npm": "npm run build && npm publish"
   },
@@ -25,5 +24,9 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "packageManager": "yarn@4.9.1",
+  "dependencies": {
+    "typescript": "^5.8.3"
   }
 }
