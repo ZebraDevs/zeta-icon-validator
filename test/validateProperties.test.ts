@@ -45,7 +45,7 @@ describe("validateProperties", () => {
 
     const errors = validateProperties(icon);
 
-    expect(errors).toHaveLength(1);
+    expect(errors).toHaveLength(2);
     expect(errors[0].message).toBe("Style property must be a variant");
     expect(errors[0].severity).toBe(ErrorSeverity.high);
   });
@@ -65,9 +65,7 @@ describe("validateProperties", () => {
     const errors = validateProperties(icon);
 
     expect(errors).toHaveLength(1);
-    expect(errors[0].message).toBe(
-      "Style property must have 'Round' and 'Sharp' variants"
-    );
+    expect(errors[0].message).toBe("Style property must have 'Round' and 'Sharp' variants");
     expect(errors[0].severity).toBe(ErrorSeverity.high);
   });
 
