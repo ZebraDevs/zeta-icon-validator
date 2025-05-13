@@ -6,6 +6,11 @@ import { ComponentNode, ComponentSetNode } from "./figma-types.js";
 import { validateBoundingBox } from "./validateBoundingBox.js";
 import { validateIconLayers } from "./validateIconLayers.js";
 
+const checkLayerNames = (icons: ComponentNode[]): boolean => {
+  const layerNames = icons.map((icon) => icon.name);
+  return icons.length == 2 && layerNames.includes("Style=Round") && layerNames.includes("Style=Sharp");
+};
+
 /**
  * Validates an icon
  *
@@ -29,7 +34,7 @@ export function validateIcon(icon: ComponentSetNode, categoryName?: string, used
     errors.push(boxSizeError);
   }
 
-  if (icon.children.length !== 2) {
+  if (icon.children.length !== 2 || !checkLayerNames(icon.children as ComponentNode[])) {
     errors.push(
       new ZetaIconError(
         "Icon layers are incorrect - should have 2 variants for style: Round and Sharp",
