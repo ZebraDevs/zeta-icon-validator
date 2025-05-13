@@ -1,6 +1,6 @@
 {
   "name": "@zebra-fed/zeta-icon-validator",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A utility used to check the validity of icons before they are uploaded to the Zeta Icon Library",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
