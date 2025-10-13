@@ -19,7 +19,12 @@ const checkLayerNames = (icons: ComponentNode[]): boolean => {
  * @param usedIconNames The names of icons that have already been used
  * @returns A list of errors
  */
-export function validateIcon(icon: ComponentSetNode, categoryName?: string, usedIconNames?: string[]): ZetaIconError[] {
+export function validateIcon(
+  icon: ComponentSetNode,
+  categoryName?: string,
+  usedIconNames?: string[],
+  verboseLogs: boolean = false
+): ZetaIconError[] {
   const errors: ZetaIconError[] = [];
 
   const iconName = icon.name;
@@ -54,7 +59,7 @@ export function validateIcon(icon: ComponentSetNode, categoryName?: string, used
     } else {
       const sizeError = validateIconSize(child.name, child.absoluteBoundingBox);
       const layerError = validateIconLayers(child);
-      const colorsFound = recFills(child);
+      const colorsFound = recFills(child, verboseLogs);
       if (colorsFound.length > 0) {
         colorsFound.forEach((color) => {
           errors.push(new ZetaIconError(`${style} icon has a color: ` + color, ErrorSeverity.medium, "ColorError"));
@@ -78,7 +83,7 @@ export function validateIcon(icon: ComponentSetNode, categoryName?: string, used
  * @param node: The node to search for fills
  * @returns An array of hex colors found in the node
  */
-const recFills = (node: ComponentNode): string[] => {
+const recFills = (node: ComponentNode, verboseLogs: boolean): string[] => {
   try {
     const colorsFound: string[] = [];
     const fills = (node as any).fills;
@@ -104,15 +109,15 @@ const recFills = (node: ComponentNode): string[] => {
 
     if (Array.isArray(children) && children.length > 0) {
       for (const child of children) {
-        const childColors = recFills(child);
+        const childColors = recFills(child, verboseLogs);
         if (childColors && Array.isArray(childColors) && childColors.length > 0) {
-          colorsFound.push(...recFills(child));
+          colorsFound.push(...recFills(child, verboseLogs));
         }
       }
     }
     return colorsFound;
   } catch (e) {
-    console.log("Error: ", e);
+    if (verboseLogs) console.error("Error finding fills: ", e);
   }
   return [];
 };
